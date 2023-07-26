@@ -35,6 +35,8 @@
                                                     @if($tipo_documento=='titulo')ÚLTIMO TITULO ACADÉMICO REGISTRADO OBTENIDO  @endif
                                                     @if($tipo_documento=='rif')COMPROBANTE DE REGISTRO ÚNICO DE INFORMACIÓN FISCAL (RIF) ACTUALIZADO  @endif
                                                     @if($tipo_documento=='carnet_mp')CARNET DE TRABAJO DEL MINISTERIO PÚBLICO @endif
+                                                    @if($tipo_documento=='DJP')DECLARACIÓN JURADA DE PATRIMONIO @endif
+                                                    
 
                     </b>
                 

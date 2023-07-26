@@ -13,29 +13,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-          
+        $this->call([          
             //PersonaSeeder::class,
-            EntidadSeeder::class, 
+            /*EntidadSeeder::class, 
             MunicipioSeeder::class,
-           ParroquiaSeeder::class,
-          
-          //  UsuarioGrupoSeeder::class,
-         
-          //  NacionalidadSeeder::class,
-         //   GeneroSeeder::class,
-          //  Estado_civilSeeder::class,
-           // Tipo_identificacionSeeder::class,
-           // Tipo_funcionarioSeeder::class,
-         
-//PaisSeeder::class,
-          
-           // BancoSeeder::class,
-           // CodigoCelSeeder::class,
-           // CodigoHabSeeder::class,
-        
-           TipoTrabajadorSeeder::class,
-
+            ParroquiaSeeder::class,
+            UsuarioGrupoSeeder::class,
+            NacionalidadSeeder::class,
+            GeneroSeeder::class,
+            Estado_civilSeeder::class,
+            Tipo_identificacionSeeder::class,
+            Tipo_funcionarioSeeder::class,
+            PaisSeeder::class,
+            BancoSeeder::class,
+            CodigoCelSeeder::class,
+            CodigoHabSeeder::class,
+            TipoTrabajadorSeeder::class,
+            ParentezcoSeeder::class,*/
+            UnidadAdscripcionSeeder::class,
             ]);
     }
 }

@@ -91,8 +91,9 @@
                     <div class="frameContenedor" style="margin:5px;" align="right">
                         <input class='btn btn-info' type="submit" value="Registrar Cuenta" >
                     </div>
-
+            @if($cuentas->count()>0)
                     <div class="card-body">
+                 
                         <table id="example1" class="table table-bordered table-striped" >                        
                             <thead>
                                 <tr>
@@ -100,12 +101,12 @@
                                     <th>Tipo de Cuenta</th>
                                     <th>Nombre del Banco</th>
                                                                
-                                    @if(in_array( Auth::user()->id_usuariogrupo, array(9,12,10,11,13,4,6) ))
-                                        <th colspan=2>Opcion</th>
+                                    @if(in_array( Auth::user()->id_usuariogrupo, array(9,12,10,11,13) ))
+                                        <th colspan=2>Opciones</th>
                                     @endif
                                 </tr>
                             </thead>    
-                            @if(isset($cuentas))
+                    
                            
                             <tbody>  
                             @foreach($cuentas as $cuentas)              
@@ -114,7 +115,7 @@
                                         <td>@if($cuentas->tipo_cuenta==1)Corriente  @elseif ($cuentas->tipo_cuenta==2)Ahorro @endif</td>
                                         <td>{{$cuentas->nombre}}</td>
                                        
-                                        @if(in_array( Auth::user()->id_usuariogrupo, array(9,12,10,11,13,4,6) ))
+                                        @if(in_array( Auth::user()->id_usuariogrupo, array(9,12,10,11,13) ))
                                             <td class="text-center">
                                             <a href= "cta_bancariaedit/{{$cuentas->id}}" class="btn btn-info" data-tip="Detalle" title="Actualizar Cuenta Bancaria" data-toggle="tooltip" data-original-title="Editar">
                                             <img src="/img/icon/modify.ico" class="icon-sm" alt="Listado">
@@ -133,7 +134,7 @@
                            @endforeach
                            
                             </tbody>
-                            @endif  
+                          
                             <tfoot>
                                 <tr>
                                 <th>N° Cuenta</th>
@@ -141,20 +142,21 @@
                                     <th>Nombre del Banco</th>
                                                                    
                                     @if(in_array( Auth::user()->id_usuariogrupo, array(9,12,10,11,13,4,6) ))
-                                        <th colspan=2>Opcion</th>
+                                        <th colspan=2>Opciones</th>
                                     @endif
                                     
                                 </tr>
                             </tfoot>
                         </table>
+                       
                     </div>
-                  
+                    @endif  
                       
-                    @else
+            @else
                  <div class="frameContenedor" style="margin:5px;"align="center">
                            <h2 aling="center"><b>DEBE COMPLETAR LOS DATOS BÁSICOS</b></h2>
                         </div>
-                 @endif  
+            @endif  
                    
                 </form>
                 </div>

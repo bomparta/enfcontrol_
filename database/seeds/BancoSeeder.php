@@ -88,11 +88,7 @@ class BancoSeeder extends Seeder
         'nro_cuenta' => 'S/N',
         'status' => '1',
     ]);
-    DB::table('banco')->insert([
-        'nombre' => '100% BANCO, BANCO UNIVERSAL, C.A',
-        'nro_cuenta' => 'S/N',
-        'status' => '1',
-    ]);
+    
     DB::table('banco')->insert([
         'nombre' => 'BANCO PROVINCIAL, S.A. BANCO UNIVERSAL',
         'nro_cuenta' => 'S/N',

@@ -71,9 +71,10 @@ class FuncionarioController extends Controller
        
       
 //dd($datos_funcionario);
-     if(count($datos_funcionario)==0){
+     if(!isset($datos_funcionario) or $datos_funcionario->count()==0){
          $datos_funcionario  =   Persona::select ('*','persona.id as persona_id')->where('persona.numero_identificacion','=',$cedula_usuario)->get();     
      }
+   //  dd($datos_funcionario);
    return view('rrhh/funcionario/datosedit',compact('uni_adscripcion','datos_funcionario','nacionalidades','generos','estado_civils','cod_habs','cod_cels','entidad','municipios','tipo_trabajador'));    
     }
     public function updatedatospersonales(Request $request)
@@ -332,7 +333,7 @@ class FuncionarioController extends Controller
         $cuentas=Cuentas_bancarias::select('banco.id as id_banco', 'banco.nombre','cuentas_bancarias.*')
         ->join ('banco', 'banco.id','=','cuentas_bancarias.nombre_banco')    
         ->where('cuentas_bancarias.funcionario_id','=',$funcionario_id)->paginate(5);
-
+// dd($cuentas);
        return view('rrhh/funcionario/cta_bancaria',compact('cuentas','funcionario_id','banco'));
     }
     public function storebanco(Request $request)
@@ -1072,8 +1073,12 @@ public function destroyfamiliar($id)
        ->where('usuario', '=',$id)
        ->where('nombre', 'carnet_mp')
        ->get();
+       $DJP= ImagenUpload::select('*')
+       ->where('usuario', '=',$id)
+       ->where('nombre', 'DJP')
+       ->get();
         if ($funcionario->count()>0){
-            return view('rrhh.funcionario.requisitos',compact('familiar','laboral','cursos','foto','cedula','partida','matrimonio','rif','carnet','constancia','horario','curriculum','titulo'));
+            return view('rrhh.funcionario.requisitos',compact('familiar','laboral','cursos','foto','cedula','partida','matrimonio','rif','carnet','constancia','horario','curriculum','titulo','DJP'));
         }else{
             return    redirect()->back()->with('error', 'DEBE COMPLETAR LOS DATOS BÁSICOS, PARA PODER CARGAR SUS REQUISITOS.'); 
         }

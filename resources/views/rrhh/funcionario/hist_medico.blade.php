@@ -69,7 +69,7 @@
                         </td>
                         <td colspan="2"> 
                         <span data-tooltip="Permite sólo caracteres alfanuméricos" sdata-flow="top">&nbsp; Especifíque:&nbsp;</span>               
-                           <input type="text" class="form-control"name="tipo_enfermedad" id="tipo_enfermedad" onkeyup="mayusculas(this);" value="{{$item->tipo_enfermedad}}"  maxlength="200" size="50" />        
+                           <input type="text" class="form-control"name="tipo_enfermedad" id="tipo_enfermedad" onkeyup="mayusculas(this);" value="{{$item->tipo_enfermedad}}"  maxlength="200" size="50"   />        
                               
                         </td>
                        
@@ -97,7 +97,7 @@
                         <td colspan="2"> 
                         <span data-tooltip="Seleccione un valor de la lista" sdata-flow="top"> &nbsp;Grupo Sanguíneo</span><span style="color:red;">*</span>&nbsp;
                             <select id="grupo_sanguineo" name="grupo_sanguineo"class="form-control"  style="width:190px;" required >
-                                            <option value="0">Seleccione...</option>
+                                            <option value="">Seleccione...</option>
                                             <option value="O RH+" @if($item->grupo_sanguineo=='O RH+')  selected @endif>O RH+</option>
                                             <option value="O RH-" @if($item->grupo_sanguineo=='O RH-')  selected @endif>O RH-</option>
                                             <option value="A RH+" @if($item->grupo_sanguineo=='A RH+')  selected @endif>A RH+</option>
