@@ -562,11 +562,15 @@ public function subirArchivo_rrhh(Request $request)
        $meses=Administracion_publica::where('rrhh.administracion_publica.funcionario_id','=',$funcionario_id)->sum('meses_servicios');  
        $dias=Administracion_publica::where('rrhh.administracion_publica.funcionario_id','=',$funcionario_id)->sum('dias_servicios');  
        
-      if($dias >30)$dias=$dias%30;$meses=$meses+1;
-      if($meses >=12)$meses=$meses%12;
-      if($meses>0)$annos=$annos+1;
-      //dd($annos,$meses,$dias);
- 
+       if($annos==0 and $meses==0 and $dias==0){
+            $annos=$meses=$dias=0;
+       }else{
+            if($dias >30 )$dias=$dias%30;$meses=$meses+1;
+            if($meses >=12  )$meses=$meses%12;
+            if($meses>0)$annos=$annos+1;
+       }
+      // dd($annos,$meses,$dias);
+
        if($datos_funcionario->count()>0){      
            return view('rrhh/registrar_adm_publica', compact('annos','meses','dias','datos_funcionario','adm_pub','nacionalidades','tipo_trabajador','edad','cedula'));
         }else {
@@ -646,6 +650,33 @@ public function subirArchivo_rrhh(Request $request)
         
         
     }
+    
+    public function update_fecha_ingreso(Request $request)
+    {
+       // dd($request);
+        $request->validate([
+            
+          
+                
+            'fecha_ingreso_adm'=>['required'],
+            'fecha_ingreso_fund'=>['required'],
+            'fecha_ingreso_vac'=>['required'],
+          
+        
+        ]);
+    //     dd($request->all());
+
+    $funcionario=Funcionario::where('id', $request->funcionario_id)
+    ->update([            
+        'fecha_ingreso_adm'=> $request->fecha_ingreso_adm,
+        'fecha_ingreso_fund' => $request->fecha_ingreso_fund,
+        'fecha_ingreso_vac' =>$request->fecha_ingreso_vac ,                            
+        
+    ]);          
+        
+    return    redirect();
+        
+    }
     public function update_antecedentes(Request $request)
     {
        // dd($request);
@@ -673,7 +704,7 @@ public function subirArchivo_rrhh(Request $request)
         $meses = $inicio->diffInMonths($fin);
         $meses = $meses%12;
         $annos = $inicio->diffInYears($fin);
-    
+    dd($dias,$meses,$annos);
         if( $error==''){
             $antecedentes = Administracion_publica::where('id',$request->adm_pub_id)
             ->update([            
@@ -828,14 +859,14 @@ public function subirArchivo_rrhh(Request $request)
       $cursos=Cursos::select('*')->where('cursos.funcionario_id','=',$funcionario_id)->paginate(15);
       $familiar  =   Familiares::select ('*','rrhh.familiares.id as id_familiar','rrhh.familiares.persona_id as id_persona', 'nacionalidad.cod as nacionalidad',
       'parentezco.descripcion as parentezco','rrhh.familiares.ocupacion as ocupacion_fam')
-      ->join ('funcionario', 'rrhh.familiares.funcionario_id','=','rrhh.funcionario.id')
+      ->join ('rrhh.funcionario', 'rrhh.familiares.funcionario_id','=','rrhh.funcionario.id')
       ->join ('persona', 'persona.id','=','rrhh.familiares.persona_id')
       ->join ('nacionalidad', 'nacionalidad.id','=','persona.id_nacionalidad')
       ->join ('parentezco', 'parentezco.id','=','rrhh.familiares.parentezco_id')
       ->join ('genero', 'persona.id_genero','=','genero.id')
       ->where('rrhh.familiares.funcionario_id','=',$funcionario_id)->paginate(5);
-      $idiomas=Idiomas::select('*')->where('idiomas.funcionario_id','=',$funcionario_id)->paginate(5);
-      $cuentas=Cuentas_bancarias::select('*')->where('cuentas_bancarias.funcionario_id','=',$funcionario_id)->paginate(5);
+      $idiomas=Idiomas::select('*')->where('rrhh.idiomas.funcionario_id','=',$funcionario_id)->paginate(5);
+      $cuentas=Cuentas_bancarias::select('*')->where('rrhh.cuentas_bancarias.funcionario_id','=',$funcionario_id)->paginate(5);
       $usuario= User::where('cedula','=',$cedula_usuario)
       ->whereIn('id_usuariogrupo',[11,12,9,10])->get();
      
@@ -1151,5 +1182,106 @@ public function subirArchivo_rrhh(Request $request)
     
             return    redirect()->back()->with('message', ' El Lapso de vacaciones colectivas fue eliminado con éxito!!.');
         }
+
+        public function nuevo_ingreso()
+    {
+        //     
+        $nacionalidades= Nacionalidad::All();
+        $uni_adscripcion= Ubic_Administrativa::All();
+        $generos= Genero::All();
+        $estado_civils= Estado_civil::All();   
+        $entidad = Entidad::orderBy('descripcion')->get();       
+        $tipo_trabajador= Tipo_Trabajador::All();   
+        $cedula_usuario=null;
+            return view('rrhh/nuevo_ingreso', compact('nacionalidades','uni_adscripcion','generos','estado_civils','tipo_trabajador','cedula_usuario','entidad')) ;
+                        
+      
+    }
+        public function buscar_nuevo_ingreso($search)
+    {
+        //      
+        $search = urldecode($search);
+        $cedula_usuario= $search;
+      //  dd($search);
+        $funcionario= Funcionario::select('rrhh.funcionario.id as funcionario_id','rrhh.funcionario.*','persona.*') 
+        ->join ('persona', 'persona.id','=','rrhh.funcionario.persona_id')        
+        ->where('persona.numero_identificacion','=',$cedula_usuario)->get();      
+        $nacionalidades= Nacionalidad::All();
+        $uni_adscripcion= Ubic_Administrativa::All();
+        $generos= Genero::All();
+        $estado_civils= Estado_civil::All();    
+        $entidad = Entidad::orderBy('descripcion')->get();       
+        $tipo_trabajador= Tipo_Trabajador::All();     
+       if($funcionario->count()>0){
+        return redirect('rrhh/nuevo_ingreso') 
+             ->with('advertencia', 'El trabajador ya se encuentra registrado.');  
+           return view('rrhh/nuevo_ingreso');
+        }else {
+            return view('rrhh/nuevo_ingreso',compact('nacionalidades','uni_adscripcion','generos','estado_civils','funcionario','cedula_usuario','tipo_trabajador','entidad')) ;
+                        
+        }
+    }
+
+    public function store_nuevo_ingreso(Request $request){
+        $request->validate([
+            'cedula' => ['required'],
+            'nacionalidad' => ['required'],
+            'primernombre' => ['required', 'string', 'max:50'],
+            'primerapellido' => ['required', 'string', 'max:50'],           
+            'estado_nac' => ['required'],
+            'fechanac' => ['required'],
+            'ciudad_nac' => ['required','string', 'max:50'],
+            'estado_nac' => ['required'],
+            'genero' => ['required'],
+            'correo' => ['required', 'string', 'max:160'],
+            'estadocivil' => ['required'],
+            'id_tipo_funcionario' => ['required'],
+            'id_oficina_administrativa' => ['required'],
+            'cargo' => ['required', 'string', 'max:160'],
+         
+        ]);
+            $persona = new Persona();     
+                $persona->id_tipo_identificacion = '1'; 
+                $persona->id_nacionalidad =$request->nacionalidad; 
+                $persona->numero_identificacion =$request->cedula; 
+                $persona->nombre =$request->primernombre; 
+                $persona->nombreseg =$request->segundonombre; 
+                $persona->apellido =$request->primerapellido; 
+                $persona->apellidoseg =$request->segundoapellido; 
+                $persona->edad =$request->fechanac; 
+                $persona->ciudad_nac =$request->ciudad_nac; 
+                $persona->estado_nac =$request->estado_nac; 
+                $persona->id_genero =$request->genero; 
+                $persona->email =$request->correo; 
+                $persona->id_estado_civil =$request->estadocivil; 
+                $persona->telefono_hab =''; 
+                $persona->telefono_cel =''; 
+                $persona->id_organismo =0; 
+                $persona->id_tipo_funcionario =0; 
+                $persona->cargo =''; 
+                $persona->id_adscripcion =0; 
+                $persona->id_dependencia =0; 
+                $persona->id_adscripcion =0; 
+                $persona->id_pais =1; 
+                $persona->id_entidad =0;           
+            $persona->save(); 
+            
+            $funcionario = new Funcionario();
+                $funcionario->persona_id = $persona->id;
+                $funcionario->id_tipo_funcionario = $request->id_tipo_funcionario;
+                $funcionario->id_oficina_administrativa = $request->id_oficina_administrativa;
+                $funcionario->cargo = $request->cargo;
+            $funcionario->save(); 
+            $nacionalidades= Nacionalidad::All();
+            $uni_adscripcion= Ubic_Administrativa::All();
+            $generos= Genero::All();
+            $estado_civils= Estado_civil::All();    
+            $entidad = Entidad::orderBy('descripcion')->get();       
+            $tipo_trabajador= Tipo_Trabajador::All();       
+            $cedula_usuario=   $request->cedula;    
+            return view('rrhh/nuevo_ingreso',compact('nacionalidades','uni_adscripcion','generos','estado_civils','funcionario','cedula_usuario','tipo_trabajador','entidad')) ;
+       
+     
+    }
 
 }

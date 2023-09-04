@@ -153,7 +153,7 @@ class FuncionarioController extends Controller
         $cedula_usuario=Auth::user()->cedula;// buscar la manera que este valor de usuario este referenciado en la tabla funcionario y Usuario
       
         $datos_persona  =   Persona::select ('*')->where('numero_identificacion','=',$cedula_usuario)->paginate(1);
-        var_dump($cedula_usuario);
+       /// var_dump($cedula_usuario);
         if(count($datos_persona)==0){
             $datos_funcionario=$datos_persona;
             return view('rrhh/funcionario/datos',compact('datos_funcionario','uni_adscripcion','cedula_usuario','parentezco','generos','nacionalidades','estado_civils','cod_habs','cod_cels','entidad','tipo_trabajador'));               
@@ -1096,10 +1096,10 @@ public function destroyfamiliar($id)
     
     public function subirArchivo(Request $request)
     {
-            //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
-           // $request->file('archivo')->store('public/foto_carnet');
-          // dd($request->hasfile('archivo'));
-          // dd($request->hasfile('archivo'),$request->all());
+        //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+        // $request->file('archivo')->store('public/foto_carnet');
+        // dd($request->hasfile('archivo'));
+        // dd($request->hasfile('archivo'),$request->all());
 
             if($request->hasfile('archivo')){
                 $imagen         = $request->file('archivo');

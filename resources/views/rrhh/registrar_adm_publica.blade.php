@@ -36,7 +36,7 @@
                         </tr>
                     </table>
       
-                <form id="formulario" name="formulario" method="POST" action="{{route('store_antecedentes')}}">    
+                <form id="formulario" name="formulario" method="POST" action="{{route('update_fecha_ingreso')}}">    
                 @csrf
                 @if(isset($datos_funcionario))
                 @foreach($datos_funcionario as $key=>$funcionario)
@@ -96,9 +96,19 @@
 
                         
                             </tbody>
-                            
-                            </table>
+                            <tfoot>
+                            <tr>
+                                <td align="right" colspan=4>
+                                <input class='btn btn-secondary' type="submit" value="Actualizar Fecha Ingreso" >
+                                 
+                                </td>
+                            </tr>
+                            </footer>
+                            </tfoot>
+                            </form>
                             <p><p>
+                            <form id="formulario" name="formulario" method="POST" action="{{route('store_antecedentes')}}">  
+                            @csrf
                             <table align="center" border="0" cellpadding="2" cellspacing="2" width="100%">
                             <tr>                            
                             <td>

@@ -7,6 +7,7 @@
     
 </a>
       <h6 class="text-dark">Bienvenid@, {{Auth::user()->name}}</h6>
+      @include('rrhh.funcionario.mensaje')  
     </div>
     <div class="col-xs-11 col-sm-11 col-md-11 col-lg-10 col-xl-10 col-xxl-10">
       <div class="card-columns">

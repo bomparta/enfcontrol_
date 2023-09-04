@@ -45,15 +45,29 @@ Route::get('/rrhh/searchredirect', function(){
     return redirect($route);
 });
 
+Route::get('/rrhh/search_nvo_ingreso', function(){     
+    /* Nuevo: si el argumento search está vacío regresar a la página anterior */
+    if (empty(Input::get('search'))) return redirect()->back();
+    
+    $search = urlencode(e(Input::get('search')));
+    $route = "/rrhh/nuevo_ingreso/$search";
+    return redirect($route);
+});
+
 Route::get("/rrhh/ver_trabajador/{search}", "RrhhController@search");
 Route::get("/rrhh/datos_rrhh/{cedula}", "RrhhController@search_datos")->name('datos_rrhh');
 Route::get("/rrhh/movimientos/{cedula}", "RrhhController@movimientos")->name('mov_rrhh');
+
+Route::get("/rrhh/nuevo_ingreso/", "RrhhController@nuevo_ingreso")->name('ingreso_rrhh');
+Route::get("/rrhh/nuevo_ingreso/{search_nvo_ingreso}", "RrhhController@buscar_nuevo_ingreso");
+Route::post("/rrhh/nuevo_ingreso", "RrhhController@store_nuevo_ingreso")->name('store_ingreso_rrhh');
 
 Route::get("/rrhh/registrar_adm_publica_edit/{id}/{cedula}", "RrhhController@antecedentes_edit")->name('antecedentes_rrhh_edit');
 Route::get("/rrhh/registrar_adm_publica/{cedula}", "RrhhController@antecedentes")->name('antecedentes_rrhh');
 Route::post("/rrhh/registrar_adm_publica", "RrhhController@store_antecedentes")->name('store_antecedentes');
 Route::post("/rrhh/registrar_adm_publica_edit", "RrhhController@update_antecedentes")->name('update_antecedentes');
 Route::delete('registrar_adm_publica/{id}', 'RrhhController@destroy')->name('borrar_adm_pub');
+Route::post("/rrhh/registrar_adm_publica_edit", "RrhhController@update_fecha_ingreso")->name('update_fecha_ingreso');
 
 Route::get("/rrhh/registrar_vac_pendientes/{cedula}", "RrhhController@vac_pendientes_rrhh")->name('vac_pendientes_rrhh');
 Route::get("/rrhh/registrar_vac_pendientesedit/{id}/{cedula}", "RrhhController@vac_pendientes_rrhh_edit")->name('vac_pendientes_rrhh_edit');

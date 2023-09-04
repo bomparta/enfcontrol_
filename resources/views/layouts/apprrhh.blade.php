@@ -147,13 +147,17 @@
                     <img src="/img/icons-lineal/check_list.png" class="icon-lg">
                     Movimientos de Personal
                 </a>
-                <hr> 
-        <div class="card-header text-primary" aling="center">Vacaciones</div>
+                <a href="{{route('ingreso_rrhh')}}" class="list-group-item list-group-item-action border-0">
+                    <img src="/img/icons-lineal/check_list.png" class="icon-lg">
+                    Nuevo Ingreso
+                </a>
+            <!-- <hr> 
+            <div class="card-header text-primary" aling="center">Vacaciones</div>
             <a href="#" class="list-group-item list-group-item-action border-0">
-                <img src="/img/icons-lineal/check_list.png" class="icon-lg">
-                Vacaciones Colectivas
+            <img src="/img/icons-lineal/check_list.png" class="icon-lg">
+            Vacaciones Colectivas
             </a>   
-            
+            --> 
                 <hr>
                 <a href="{{route('reportesrrhh')}}" class="list-group-item list-group-item-action border-0">
                     <img src="/img/icons-lineal/check_list.png" class="icon-lg">
