@@ -37,13 +37,13 @@
                     </table>
       
                 <form id="formulario" name="formulario" method="POST" action="{{route('update_fecha_ingreso')}}">    
-                @csrf
-                @if(isset($datos_funcionario))
-                @foreach($datos_funcionario as $key=>$funcionario)
+                    @csrf
+                    @if(isset($datos_funcionario))
+                    @foreach($datos_funcionario as $key=>$funcionario)
              
                     <input type= "hidden" id="funcionario_id" name="funcionario_id" value="{{$funcionario->funcionario_id}}" class="form-control"  >    
                     <input type= "hidden" id="cedula" name="cedula" value="{{$cedula}}" class="form-control"  >    
-                    <input type="hidden" name="tipo_documento" id="tipo_documento" value="adm_pub_constancia" required>                                                    
+                    <input type="hidden" name="tipo_documento" id="tipo_documento" value="adm_pub_constancia" >                                                    
                             <table align="center" border="1" cellpadding="2" cellspacing="2" width="100%">                            
                             <tbody>                            
                             <tr  class="table-secondary">
@@ -105,9 +105,12 @@
                             </tr>
                             </footer>
                             </tfoot>
-                            </form>
+                        </form>
                             <p><p>
                             <form id="formulario" name="formulario" method="POST" action="{{route('store_antecedentes')}}">  
+                            <input type= "hidden" id="funcionario_id" name="funcionario_id" value="{{$funcionario->funcionario_id}}" class="form-control"  >    
+                            <input type= "hidden" id="cedula" name="cedula" value="{{$cedula}}" class="form-control"  >    
+                            <input type="hidden" name="tipo_documento" id="tipo_documento" value="adm_pub_constancia" >                                    
                             @csrf
                             <table align="center" border="0" cellpadding="2" cellspacing="2" width="100%">
                             <tr>                            
@@ -201,7 +204,7 @@
                     @endforeach
                     @endif 
                     <hr>
-                <div class="table-responsive mt-3">
+                 <div class="table-responsive mt-3">
                     <table id="example1" class="table table-striped table-bordered" style="width:100%">                                
                     <thead>
                         <tr>
@@ -258,8 +261,8 @@
                             <th>Requisitos</th>
                         </tr>
                     </tfoot>
-                </table>            
-                </div>
+                 </table>            
+                    </div>
                  
          
             </div>

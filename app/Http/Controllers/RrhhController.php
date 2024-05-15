@@ -209,11 +209,11 @@ if($tipo_documento!='adm_pub_constancia'){
     ->where('rrhh.rrhh_movimientos.id', '=',$id_rrhh_mov)
     ->get();
    }else{
-    $rrhh=Administracion_publica::Select('*','rrhh.rrhh.administracion_publica.id as adm_id','tipo_trabajador.descripcion as tipo_trabajador') 
-    ->JOIN('tipo_trabajador','tipo_trabajador.id','rrhh.rrhh.administracion_publica.id_tipo_funcionario')        
-    ->JOIN('rrhh.funcionario','rrhh.funcionario.id','rrhh.rrhh.administracion_publica.funcionario_id')  
+    $rrhh=Administracion_publica::Select('*','rrhh.administracion_publica.id as adm_id','tipo_trabajador.descripcion as tipo_trabajador') 
+    ->JOIN('tipo_trabajador','tipo_trabajador.id','rrhh.administracion_publica.id_tipo_funcionario')        
+    ->JOIN('rrhh.funcionario','rrhh.funcionario.id','rrhh.administracion_publica.funcionario_id')  
     ->JOIN('persona','persona.id','rrhh.funcionario.persona_id')     
-    ->where('rrhh.rrhh.administracion_publica.id','=',$id_rrhh_mov)
+    ->where('rrhh.administracion_publica.id','=',$id_rrhh_mov)
     ->get();      ;
     return view('rrhh.creardocumento_rrhh',compact('tipo_documento','id_rrhh_mov','rrhh','rrhh_mov','cedula'));
     }
@@ -520,7 +520,7 @@ public function subirArchivo_rrhh(Request $request)
            return view('rrhh/movimientos', compact('datos_funcionario','nacionalidades','edad', 'movimiento','cedula_usuario'));
         }else {
             return redirect('rrhh/ver_trabajador') 
-             ->with('advertencia', 'No hay resultados que mostrar.');             
+             ->with('advertencia', 'No hay resultados que mostrar. ');             
         }
     }
     public function antecedentes(Request $request,$cedula)
@@ -583,13 +583,13 @@ public function subirArchivo_rrhh(Request $request)
        // dd($request);
         $request->validate([
             
-            'funcionario_id' => ['required'],
+          //  'funcionario_id' => ['required'],
             'institucion' => ['required','string', 'max:155'],
             'id_tipo_trabajador'=>['required'],
             'ult_cargo'=>['required', 'string', 'max:100'],            
             'fechaingreso'=>['required'],
             'fechaegreso'=>['required'],
-            'tipo_documento'=>['required'],
+         //   'tipo_documento'=>['required'],
           //  'archivo'=>['required'],    
             
         ]);
@@ -627,30 +627,25 @@ public function subirArchivo_rrhh(Request $request)
             $antecedentes->usuario_id_create = Auth::user()->id;    
             $antecedentes->observaciones = $request->observaciones;           
          
-            $antecedentes->save();
-
-            $funcionario=Funcionario::where('id', $request->funcionario_id)
-            ->update([            
-                'fecha_ingreso_adm'=> $request->fecha_ingreso_adm,
-                'fecha_ingreso_fund' => $request->fecha_ingreso_fund,
-                'fecha_ingreso_vac' =>$request->fecha_ingreso_vac ,                            
-                
-            ]);
-
+          if($antecedentes->save()){
             return    redirect()->back()->with('message', ' El Antecedente de servicio del Trabajador(a) en la administración pública fue agregado con éxito!!.');
-            
-            //}else{
-           //     return    redirect()->back()->with('message', ' Problemas para subir el archivo.');
+          }else{
+            return    redirect()->back()->with('error', ' Error al intentar registrar los datos.');
+          }
+     
+  
+    
         
        
           
         }else{
             return    redirect()->back()->with('error',$error);
         }
-        
-        
-    }
-    
+    }      
+
+
+
+     
     public function update_fecha_ingreso(Request $request)
     {
        // dd($request);
@@ -674,7 +669,7 @@ public function subirArchivo_rrhh(Request $request)
         
     ]);          
         
-    return    redirect();
+    return    redirect()->back()->with('message', ' Las fechas de ingreso del trabajador fue actualizada con Éxito.');
         
     }
     public function update_antecedentes(Request $request)
@@ -1238,6 +1233,7 @@ public function subirArchivo_rrhh(Request $request)
             'id_tipo_funcionario' => ['required'],
             'id_oficina_administrativa' => ['required'],
             'cargo' => ['required', 'string', 'max:160'],
+
          
         ]);
             $persona = new Persona();     
@@ -1270,8 +1266,16 @@ public function subirArchivo_rrhh(Request $request)
                 $funcionario->persona_id = $persona->id;
                 $funcionario->id_tipo_funcionario = $request->id_tipo_funcionario;
                 $funcionario->id_oficina_administrativa = $request->id_oficina_administrativa;
-                $funcionario->cargo = $request->cargo;
-            $funcionario->save(); 
+                $funcionario->fecha_ingreso_fund = $request->fecha_ingreso;               
+
+            if($funcionario->save()){
+                $tipo_mensaje=1;
+                $mensaje="El Ingreso de ".$request->primernombre." ".$request->primerapellido." fue registrado con Éxito";
+            }else{
+                $tipo_mensaje=2;
+                $mensaje="Error al intentar registrar los datos.";
+            } 
+
             $nacionalidades= Nacionalidad::All();
             $uni_adscripcion= Ubic_Administrativa::All();
             $generos= Genero::All();
@@ -1279,8 +1283,24 @@ public function subirArchivo_rrhh(Request $request)
             $entidad = Entidad::orderBy('descripcion')->get();       
             $tipo_trabajador= Tipo_Trabajador::All();       
             $cedula_usuario=   $request->cedula;    
-            return view('rrhh/nuevo_ingreso',compact('nacionalidades','uni_adscripcion','generos','estado_civils','funcionario','cedula_usuario','tipo_trabajador','entidad')) ;
-       
+            if($tipo_mensaje==1){
+                return redirect('rrhh/nuevo_ingreso') 
+                ->with('message', $mensaje);  
+            }else{
+                return redirect('rrhh/nuevo_ingreso') 
+                ->with('error',$mensaje);  
+            }
+
+          
+         // return view('rrhh/nuevo_ingreso');
+
+            /*if($tipo_mensaje==1){
+                return view('rrhh/nuevo_ingreso',
+                compact('nacionalidades','uni_adscripcion','generos','estado_civils','funcionario','cedula_usuario','tipo_trabajador','entidad','mensaje')  ) ;
+            }else{
+                return view('rrhh/nuevo_ingreso',
+                compact('nacionalidades','uni_adscripcion','generos','estado_civils','funcionario','cedula_usuario','tipo_trabajador','entidad')  ) ;
+            }*/
      
     }
 

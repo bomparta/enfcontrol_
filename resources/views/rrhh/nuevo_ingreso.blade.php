@@ -220,7 +220,10 @@
                                     </div>
                                 @enderror
                             </td>
-                            
+                            <td>
+                            <span data-tooltip="Indique una fecha del calendario" sdata-flow="top">&nbsp;Fecha de Ingreso FENFMP&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red;">*</span><br>
+                                <input type="date" name="fecha_ingreso" id="fecha_ingreso" value=""  maxlength="25" required/>
+                            </td>
                         </tr>
                         </table>
                         <div class="frameContenedor" style="margin:5px;" align="right">
