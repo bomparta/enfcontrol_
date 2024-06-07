@@ -84,9 +84,9 @@
                      </tr>
                      <tr  >
                      <td  >   {{$funcionario->administrativa}}   </td>
-                     <td  align="center"   >   {{date('d-m-Y',strtotime($funcionario->fecha_ingreso_adm))}}   </td>
+                     <td  align="center"   >  @if($funcionario->fecha_ingreso_adm) {{ date('d-m-Y',strtotime($funcionario->fecha_ingreso_adm))}} @else SIN REGISTRO @endif  </td>
                      <td    >    {{date('d-m-Y',strtotime($funcionario->fecha_ingreso_fund))}}   </td>
-                     <td   >    {{date('d-m-Y',strtotime($funcionario->fecha_ingreso_vac))}}   </td>
+                     <td   >  @if($funcionario->fecha_ingreso_vac) {{ date('d-m-Y',strtotime($funcionario->fecha_ingreso_vac))}} @else SIN REGISTRO @endif          </td>
                      </tr>
                      
                    

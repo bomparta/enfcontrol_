@@ -3,8 +3,10 @@
 <div class="container">
     <div class="row justify-content-start">  
       <div class="col-12 text-center">
-      <h4 class="text-primary" >CONTROL DE EXPEDIENTES RRHH</h6>   
-    
+      <h4 class="text-primary" >CONTROL DE EXPEDIENTES RRHH</h4> 
+   
+
+
 </a>
       <h6 class="text-dark">Bienvenid@, {{Auth::user()->name}}</h6>
       @include('rrhh.funcionario.mensaje')  

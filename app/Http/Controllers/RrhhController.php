@@ -305,16 +305,17 @@ public function subirArchivo_rrhh(Request $request)
         'tipo_trabajador.descripcion as trabajador','ubic_administrativa.descripcion as administrativa',
         'ent.descripcion as ent_domi','municipio.nombre as muni_domi','parroquia.nombre as parr_domi') 
         ->join ('persona', 'persona.id','=','rrhh.funcionario.persona_id')    
-        ->join('estado_civil','estado_civil.id','=','persona.id_estado_civil')  
+       ->join('estado_civil','estado_civil.id','=','persona.id_estado_civil')  
         ->join('entidad','entidad.id','=','persona.estado_nac') 
-        ->JOIN('tipo_trabajador','tipo_trabajador.id','rrhh.funcionario.id_tipo_funcionario')      
+       ->JOIN('tipo_trabajador','tipo_trabajador.id','rrhh.funcionario.id_tipo_funcionario')      
         ->JOIN('ubic_administrativa','ubic_administrativa.id','rrhh.funcionario.id_oficina_administrativa')          
         ->join('entidad as ent','ent.id','=','rrhh.funcionario.estado_domicilio') 
         ->join('municipio','municipio.id','=','rrhh.funcionario.municipio_domicilio')     
         ->join('parroquia','parroquia.id','=','rrhh.funcionario.parroquia_domicilio')             
         ->where('persona.numero_identificacion','=',$cedula_usuario)->get();
 
-      
+     // var_dump($datos_funcionario);
+
         $laboral=Laboral::select('*')->where('rrhh.laboral.funcionario_id','=',$funcionario_id)->paginate(5);
         $educacion= Educacion_funcionarios::where('funcionario_id',$funcionario_id)->get();
         $cursos=Cursos::select('*')->where('rrhh.cursos.funcionario_id','=',$funcionario_id)->paginate(15);

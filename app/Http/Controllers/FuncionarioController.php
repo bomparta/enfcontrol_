@@ -169,13 +169,22 @@ class FuncionarioController extends Controller
         $cod_cels= Cod_Celular::All();
         $parentezco=Parentezco::All();       
         $cedula_usuario=Auth::user()->cedula;// buscar la manera que este valor de usuario este referenciado en la tabla funcionario y Usuario
-       $funcionario= Funcionario::select('funcionario.id as funcionario_id') 
-       ->join ('persona', 'persona.id','=','funcionario.persona_id')
-       ->where('persona.numero_identificacion','=',$cedula_usuario)->get();
+       $funcionario= Funcionario::select('rrhh.funcionario.id as funcionario_id') 
+       ->join ('public.persona', 'public.persona.id','=','rrhh.funcionario.persona_id')
+       ->where('public.persona.numero_identificacion','=',$cedula_usuario)->get();
+       $funcionario_correo= Persona::select('persona.email as correo') 
+       ->where('public.persona.numero_identificacion','=',$cedula_usuario)->get();
+      // dd($funcionario_correo);
        $funcionario_id=null;
        foreach($funcionario as $funcionario){
         $funcionario_id=$funcionario->funcionario_id;
+      
        }
+       foreach($funcionario_correo as $funcionario_correo){
+        $correo_titular=$funcionario_correo->correo;
+     
+       }
+      // dd($correo_titular);
       
         $familiar  =   Familiares::select ('*','familiares.id as id_familiar','familiares.persona_id as id_persona', 'nacionalidad.cod as nacionalidad',
         'parentezco.descripcion as parentezco')
@@ -188,7 +197,7 @@ class FuncionarioController extends Controller
        
         
   // var_dump($familiar);
-    return view('rrhh/funcionario/familiar',compact('funcionario_id','familiar','generos','parentezco','nacionalidades','estado_civils','cod_habs','cod_cels'));    
+    return view('rrhh/funcionario/familiar',compact('funcionario_id','correo_titular','familiar','generos','parentezco','nacionalidades','estado_civils','cod_habs','cod_cels'));    
 }
    
     public function editfamiliar(Request $request,$id)// editar datos familiares

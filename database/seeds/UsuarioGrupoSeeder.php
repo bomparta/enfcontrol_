@@ -30,7 +30,7 @@ class UsuarioGrupoSeeder extends Seeder
         ]);
         DB::table('usuario_grupo')->insert([
             'nombre' => 'Informatica',
-            'activos' => '0',
+            'activos' => '1',
         ]);
         DB::table('usuario_grupo')->insert([
             'nombre' => 'Supervisor',
@@ -54,11 +54,11 @@ class UsuarioGrupoSeeder extends Seeder
         ]);
         DB::table('usuario_grupo')->insert([
             'nombre' => 'Funcionario',
-            'activos' => '0',
+            'activos' => '1',
         ]);
         DB::table('usuario_grupo')->insert([
             'nombre' => 'Administrador RRHH',
-            'activos' => '0',
+            'activos' => '10',
         ]);
     }
 }

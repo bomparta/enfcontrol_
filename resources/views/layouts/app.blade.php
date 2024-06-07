@@ -91,13 +91,15 @@
                         <a class="nav-link" href="{{route('menubienes')}}">Registro y Control de Bienes Nacionales&nbsp;<i class="fa fa-box"></i></a>
                     </li>
                     @endif
-                    @if(in_array( Auth::user()->id_usuariogrupo, array(12,11,10,13,12,14,15,16,6,4) ))
+                    @if(in_array( Auth::user()->id_usuariogrupo, array(9,12,11,10,13,12,14,15,16,6,4) ))
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('rrhh')}}">Control de Expedientes&nbsp;<i class="fa fa-box"></i></a>
                     </li>
-                 <!--  <li class="nav-item">
+                    @endif
+                    @if(in_array( Auth::user()->id_usuariogrupo, array(12,10) ))
+                 <li class="nav-item">
                         <a class="nav-link" href="{{route('vacaciones')}}">Vacaciones&nbsp;<i class="fa fa-box"></i></a>
-                    </li>-->
+                    </li>
                     @endif
                     @if(in_array( Auth::user()->id_usuariogrupo, array(13) ))
                     <li class="nav-item">

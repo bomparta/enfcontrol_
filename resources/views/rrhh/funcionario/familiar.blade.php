@@ -162,7 +162,7 @@
                                                 </td>
                                                 <td>
                                                     <span data-tooltip="Debe registar un correo electrónico." sdata-flow="top"> &nbsp;Correo&nbsp;</span><span style="color:red;">*</span>&nbsp;<br>
-                                                    <input id="correo" type="email"  maxlength="250"  placeholder="Ej. micorreo@dominio.com" onkeyup="mayusculas(this);" class="form-control @error('correo') is-invalid @enderror" name="correo" value="" required>
+                                                    <input id="correo" type="email"  maxlength="250"  placeholder="Ej. micorreo@dominio.com" onkeyup="mayusculas(this);" class="form-control @error('correo') is-invalid @enderror" name="correo" value="{{$correo_titular}}" required>
                                                     @error('correo')
                                                     <div class="invalid-feedback">
                                                     <strong>{{ $message }}</strong>

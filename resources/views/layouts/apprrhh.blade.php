@@ -114,14 +114,14 @@
                     <img src="/img/icons-lineal/check_list.png" class="icon-lg">
                     Planilla de Actualización de Datos
                 </a>
-            
-               <!--<div class="card-header text-primary" aling="center">Vacaciones</div>
+                @if(in_array( Auth::user()->id_usuariogrupo, array(14,12) ))<!--Funcionarios !--> 
+              <div class="card-header text-primary" aling="center">Vacaciones</div>
                 <a href="{{route('funcionario_vacaciones')}}" class="list-group-item list-group-item-action border-0">
                     <img src="/img/icons-lineal/check_list.png" class="icon-lg">
                     Solicitud de Vacaciones
-                </a>  -->
+                </a>  
               
-                @if(in_array( Auth::user()->id_usuariogrupo, array(14,12) ))<!--Funcionarios !--> 
+             
                 <a href="{{route('vacaciones_pendientes_aprobacion')}}" class="list-group-item list-group-item-action border-0">
                 <img src="/img/icons-lineal/check_list.png" class="icon-lg">
                 Aprobación de Vacaciones Jefe(a) inmediato o Coordinador(a)
@@ -182,6 +182,13 @@
             @endif
         @endif
         <hr>
+          <!-- Menu Comun -->
+
+          <a href="/password/reset" class="list-group-item list-group-item-action border-0">
+            <img src="/img/icons-lineal/check_list.png" class="icon-lg">
+            Cambio de clave
+        </a>
+
         <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

@@ -190,7 +190,7 @@
                             <input type="text" class="form-control"name="profesion" id="profesion" style="width:100%;" onkeyup="mayusculas(this);" value="{{$item->profesion_ocup}}"  maxlength="200" size="50" class="form-control" required/>
                         </td>
                         <td colspan="4"> 
-                        <span data-tooltip="Permite sólo caracteres alfanuméricos" sdata-flow="top"> &nbsp;En caso de haber culminado otros estudios de alto nivel técnico o universitario, indique Titulos obtenidos:&nbsp;</span><span style="color:red;">*</span>&nbsp;
+                        <span data-tooltip="Permite sólo caracteres alfanuméricos" sdata-flow="top"> &nbsp;En caso de haber culminado otros estudios de alto nivel técnico o universitario, indique Titulos obtenidos:&nbsp;</span>
                             <input type="text" class="form-control"name="otros_estudios" id="otros_estudios" style="width:100%;" onkeyup="mayusculas(this);"  value="{{$item->otros_estudios}}"  maxlength="200" size="50" />
                         </td>
                         
