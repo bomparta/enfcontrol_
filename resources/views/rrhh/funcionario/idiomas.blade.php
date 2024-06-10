@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('styles')
 
-@endsection
+@endsection 
 
 @section('content')
     <div class="d-flex" id="wrapper">
@@ -9,12 +9,9 @@
       
         <div id="page-content-wrapper">
         <div class="sidebar-heading text-center">
-      <h4 class="text-primary" >CONTROL DE EXPEDIENTES RRHH</h6>   
-   
-      </a>
-      <h6 class="text-dark">Bienvenid@, {{Auth::user()->name}}</h6>
-    </div> 
-
+            <h4 class="text-primary" >CONTROL DE EXPEDIENTES RRHH</h6>        
+            <h6 class="text-dark">Bienvenid@, {{Auth::user()->name}}</h6>
+        </div> 
             <div class="container pb-4">
             <div align="center" id="divTituloIndex2" class="text-primary">
                
@@ -22,7 +19,7 @@
                 </div>
               
                     <table  align="center" border="0" cellpadding="5" cellspacing="2" width="100%" >
-                    <tr>
+                        <tr>
                             <td colspan="4">
                             <div class="col-12 text-center">
                 
@@ -49,16 +46,14 @@
                                 </div>
                             </td>
                         </tr>
-                        </table>
+                    </table>
                         @if(isset($funcionario_id))     
                        <table>
                <form id="formulario" name="formulario" method="post" action="{{route('idiomasregistrar')}}">
               
-                <input id="id_funcionario" type="hidden" name="id_funcionario" onkeyup="mayusculas(this);" value="{{$funcionario_id}}" >
-                @csrf
-               
-                    <tr> 
-                        
+                    <input id="id_funcionario" type="hidden" name="id_funcionario" onkeyup="mayusculas(this);" value="{{$funcionario_id}}" >
+                    @csrf                
+                    <tr>                         
                         <td>
                         <span data-tooltip="Permite sólo caracteres alfanuméricos" sdata-flow="top"> &nbsp;Idioma&nbsp;</span><span style="color:red;">*</span>&nbsp;
                             <input type="text" class="form-control" required name="nommbre_idioma" id="nommbre_idioma" onkeyup="mayusculas(this);" value="" maxlength="25"/>
