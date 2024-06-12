@@ -20,6 +20,7 @@
                         <a href="{{route('funcionario')}}" ><h6 class="card-title">Registrar Información</h6>
                           <img src="{{url('/img/registro.jpeg')}}" class="card-img-bottom" >
                         </a>
+                        <a href="{{url('/pdf/pasos.pdf')}}" target="_new"><img src="{{url('/img/icon/adv.jpg')}}"  >Pasos para el registro</a>
                       </div>
                     </div>                   
                                    
