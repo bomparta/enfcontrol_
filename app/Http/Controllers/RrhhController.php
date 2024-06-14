@@ -290,11 +290,12 @@ public function subirArchivo_rrhh(Request $request)
         * y en 'aliases' se coloco esto 'PDF' => Barryvdh\DomPDF\Facade::class,
         */
         $cedula_usuario=Auth::user()->cedula;
-        $funcionario= Funcionario::select('rrhh.funcionario.id as rrhh.funcionario_id','rrhh.funcionario.*','persona.*') 
-        ->join ('persona', 'persona.id','=','rrhh.funcionario.persona_id')        
-        ->where('persona.numero_identificacion','=',$cedula_usuario)->get();
         $funcionario_id=null;
         $laboral=null;
+        $funcionario= Funcionario::select('rrhh.funcionario.id as funcionario_id','rrhh.funcionario.*','persona.*') 
+        ->join ('persona', 'persona.id','=','rrhh.funcionario.persona_id')        
+        ->where('persona.numero_identificacion','=',$cedula_usuario)->get();
+       // dd($funcionario);
         foreach($funcionario as $funcionario){
             $funcionario_id=$funcionario->funcionario_id;
             $edad=Carbon::parse($funcionario->edad)->age;
@@ -314,9 +315,10 @@ public function subirArchivo_rrhh(Request $request)
         ->join('parroquia','parroquia.id','=','rrhh.funcionario.parroquia_domicilio')             
         ->where('persona.numero_identificacion','=',$cedula_usuario)->get();
 
-     // var_dump($datos_funcionario);
+ 
 
         $laboral=Laboral::select('*')->where('rrhh.laboral.funcionario_id','=',$funcionario_id)->paginate(5);
+       // dd($laboral);
         $educacion= Educacion_funcionarios::where('funcionario_id',$funcionario_id)->get();
         $cursos=Cursos::select('*')->where('rrhh.cursos.funcionario_id','=',$funcionario_id)->paginate(15);
         $familiar  =   Familiares::select ('*','rrhh.familiares.id as id_familiar','rrhh.familiares.persona_id as id_persona', 'nacionalidad.cod as nacionalidad',

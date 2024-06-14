@@ -83,7 +83,7 @@ body { margin-left: 0.1in; margin-right: 0.1in; margin-top: 0.1in; margin-bottom
 </tr>
 
         <tbody>
-        @foreach($datos_funcionario as $key=>$funcionario)
+        @foreach($datos_funcionario as $funcionario)
 		<tr>
 			<th colspan="6" align="center"   >  FECHA DE ELABORACIÓN</th>
 			<th colspan="6" align="center"   >    NACIONALIDAD - CEDULA DE IDENTIDAD </th>		
@@ -126,7 +126,7 @@ body { margin-left: 0.1in; margin-right: 0.1in; margin-top: 0.1in; margin-bottom
 		<td  align="center"   >{{$edad}}  AÑOS </td>
 	</tr>
 	
-	<tr>
+	<tr> 
 		<th  colspan=6  align="center"   >   TIPO DE TRABAJADOR    </th>
 		<th  colspan=3 align="center"   >   CARGO    </th>
 		<th  colspan=4 align="center"   >   UNIDAD DE ADSCRIPCIÓN    </th>
