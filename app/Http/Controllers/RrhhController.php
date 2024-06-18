@@ -292,16 +292,17 @@ public function subirArchivo_rrhh(Request $request)
         $cedula_usuario=Auth::user()->cedula;
         $funcionario_id=null;
         $laboral=null;
-        $funcionario= Funcionario::select('rrhh.funcionario.id as funcionario_id','rrhh.funcionario.*','persona.*') 
+        $funcionario= Funcionario::select('rrhh.funcionario.id as funcionario_id','rrhh.funcionario.cargo','persona.edad') 
         ->join ('persona', 'persona.id','=','rrhh.funcionario.persona_id')        
         ->where('persona.numero_identificacion','=',$cedula_usuario)->get();
-       // dd($funcionario);
+      // dd($funcionario);
         foreach($funcionario as $funcionario){
             $funcionario_id=$funcionario->funcionario_id;
             $edad=Carbon::parse($funcionario->edad)->age;
+            $cargo=$funcionario->cargo;
         }
         $datos_funcionario= Funcionario::select('rrhh.funcionario.id as funcionario_id',
-        'rrhh.funcionario.*','persona.*','rrhh.funcionario.cargo as cargo','rrhh.funcionario.id_oficina_administrativa as adscripcion'     ,
+        'rrhh.funcionario.*','persona.*',
         'estado_civil.descripcion as est_civil','entidad.descripcion as estado_nac',
         'tipo_trabajador.descripcion as trabajador','ubic_administrativa.descripcion as administrativa',
         'ent.descripcion as ent_domi','municipio.nombre as muni_domi','parroquia.nombre as parr_domi') 
@@ -337,8 +338,8 @@ public function subirArchivo_rrhh(Request $request)
        ->where('nombre', 'foto')
        ->get();
      if(count($foto)>0 && count($datos_funcionario)>0){
-        $view = \view('rrhh/funcionario/planillarrhh', compact('foto','edad','datos_funcionario','familiar','cursos','laboral','idiomas','cuentas','educacion'));
-       
+        $view = \view('rrhh/funcionario/planillarrhh', compact('foto','cargo','edad','datos_funcionario','familiar','cursos','laboral','idiomas','cuentas','educacion'));
+     //  dd($cargo);
        $pdf = App::make('dompdf.wrapper');
        $pdf->loadHTML($view)->setPaper('legal');
        return $pdf->download('planillarrhh'.'.pdf');     

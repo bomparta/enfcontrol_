@@ -83,7 +83,7 @@ body { margin-left: 0.1in; margin-right: 0.1in; margin-top: 0.1in; margin-bottom
 </tr>
 
         <tbody>
-        @foreach($datos_funcionario as $funcionario)
+        @foreach($datos_funcionario as $key=>$funcionario)
 		<tr>
 			<th colspan="6" align="center"   >  FECHA DE ELABORACIÓN</th>
 			<th colspan="6" align="center"   >    NACIONALIDAD - CEDULA DE IDENTIDAD </th>		
@@ -127,14 +127,14 @@ body { margin-left: 0.1in; margin-right: 0.1in; margin-top: 0.1in; margin-bottom
 	</tr>
 	
 	<tr> 
-		<th  colspan=6  align="center"   >   TIPO DE TRABAJADOR    </th>
-		<th  colspan=3 align="center"   >   CARGO    </th>
-		<th  colspan=4 align="center"   >   UNIDAD DE ADSCRIPCIÓN    </th>
+		<th  colspan= 3 align="center"   >   TIPO DE TRABAJADOR    </th>
+		<th  colspan=4 align="center"   >   CARGO    </th>
+		<th  colspan=6 align="center"   >   UNIDAD DE ADSCRIPCIÓN    </th>
 	</tr>
 	<tr>
-		<td  colspan=6 align="center"   >   {{$funcionario->trabajador}}   </td>
-		<td  colspan=3 rowspan=2 align="center"   >   {{$funcionario->cargo}}   </td>
-		<td  colspan=4 rowspan=2 align="center"   >   {{$funcionario->adscripcion}}   </td>
+		<td  colspan=3 align="center"   >   {{$funcionario->trabajador}}   </td>
+		<td  colspan=4 align="center"   >   {{$cargo}}   </td>
+		<td  colspan=6 align="center"   >   {{$funcionario->administrativa}}   </td>
 	</tr>
 	<tr>
 		<th class="th_encabezado1"  colspan=13  height="22" align="center"   >   DIRECCIÓN DE HABITACIÓN     </th>
@@ -389,12 +389,11 @@ body { margin-left: 0.1in; margin-right: 0.1in; margin-top: 0.1in; margin-bottom
 		</tr>
 		@foreach($idiomas as $idiomas)
 		<tr>
-			<td  colspan=3 align="center"   >  {{$idiomas->nommbre_idioma}}      </td>
-			<td  colspan=2 align="center"   >  @if ($idiomas->habla==1)  BIEN   @endif  @if ($idiomas->habla==2) MUY BIEN   @endif  @if ($idiomas->habla==3)  REGULAR   @endif</td>
-			<td  colspan=3 align="center"   >    @if ($idiomas->lee==1)  BIEN   @endif  @if ($idiomas->lee==2) MUY BIEN   @endif  @if ($idiomas->lee==3)  REGULAR   @endif</td>
-			<td  colspan=5 align="center"   >    @if ($idiomas->escribe==1)  BIEN   @endif  @if ($idiomas->escribe==2) MUY BIEN   @endif  @if ($idiomas->escribe==3)  REGULAR   @endif</td>
+		<td  colspan=3 align="center"   >  {{$idiomas->nommbre_idioma}}      </td>
+                        <td  colspan=2 align="center"   >  @if ($idiomas->habla==1)  REGULAR   @endif  @if ($idiomas->habla==3) MUY BIEN   @endif  @if ($idiomas->habla==2) BIEN   @endif</td>
+                        <td  colspan=3 align="center"   >    @if ($idiomas->lee==1)  REGULAR   @endif  @if ($idiomas->lee==3) MUY BIEN   @endif  @if ($idiomas->lee==2)  BIEN   @endif</td>
+                        <td  colspan=5 align="center"   >    @if ($idiomas->escribe==1) REGULAR   @endif  @if ($idiomas->escribe==3) MUY BIEN   @endif  @if ($idiomas->escribe==2)  BIEN   @endif</td>
 
-			
 		</tr>
 		@endforeach
 	<tr>

@@ -43,40 +43,12 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}" title ="Ir A la Página Principal">
-                <img src="{{url('/img/logo2.png')}}" >{{ config('app.name', 'Sistema Gestión ENFMP') }}
-
+                <img src="{{url('/img/logo2.png')}}" >{{ config('app.name', 'Sistema Gestión ENFMP') }}   
                 </a>
                
-                <li class="nav-item"><a class="nav-link" href="{{route('home')}}">Inicio&nbsp;<i class="fa fa-home"></i></a>
-                </li>
-                @if(isset(Auth::user()->id_usuariogrupo))
-                    @if(in_array( Auth::user()->id_usuariogrupo, array(1) ))
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('dashboard')}}">Estudiante&nbsp;<i class="fa fa-box"></i></a>
-                    </li>
-                    @endif
-                    @if(in_array( Auth::user()->id_usuariogrupo, array(2) ))
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('home')}}">Información Personal&nbsp;<i class="fa fa-box"></i></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('home')}}">Notas Académicas&nbsp;<i class="fa fa-box"></i></a>
-                    </li>
-                    @endif
-                    @if(in_array( Auth::user()->id_usuariogrupo, array(4) ))
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('adm')}}">Administración&nbsp;<i class="fa fa-box"></i></a>
-                    </li>
-                    @endif
-                    @if(in_array( Auth::user()->id_usuariogrupo, array(6) ))
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('admincontrol')}}">Control de Estudios&nbsp;<i class="fa fa-cart-plus"></i></a>
-                    </li>
-                    
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('actividad')}}">Eventos Académicos&nbsp;<i class="fa fa-list"></i></a>
-                    </li>
-                    @endif
+                <li class="nav-item"><a class="nav-link" href="{{route('home')}}">Inicio&nbsp;<i class="fa fa-home"></i></a>  </li>
+              
+                @if(isset(Auth::user()->id_usuariogrupo))                 
                     @if(in_array( Auth::user()->id_usuariogrupo, array(9) ))
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('usuario')}}">Informática&nbsp;<i class="fa fa-box"></i></a>
