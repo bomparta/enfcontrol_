@@ -186,10 +186,10 @@ class FuncionarioController extends Controller
        }
       // dd($correo_titular);
       
-        $familiar  =   Familiares::select ('*','familiares.id as id_familiar','familiares.persona_id as id_persona', 'nacionalidad.cod as nacionalidad',
+        $familiar  =   Familiares::select ('*','rrhh.familiares.id as id_familiar','rrhhfamiliares.persona_id as id_persona', 'nacionalidad.cod as nacionalidad',
         'parentezco.descripcion as parentezco')
-        ->join ('rrhh.funcionario', 'familiares.funcionario_id','=','rrhh.funcionario.id')
-        ->join ('persona', 'persona.id','=','familiares.persona_id')
+        ->join ('rrhh.funcionario', 'rrhh.familiares.funcionario_id','=','rrhh.funcionario.id')
+        ->join ('persona', 'persona.id','=','rrhh.familiares.persona_id')
         ->join ('nacionalidad', 'nacionalidad.id','=','persona.id_nacionalidad')
         ->join ('parentezco', 'parentezco.id','=','familiares.parentezco_id')
         ->join ('genero', 'persona.id_genero','=','genero.id')
@@ -711,8 +711,8 @@ class FuncionarioController extends Controller
     public function createidiomas()
     {
         $cedula_usuario=Auth::user()->cedula;
-        $funcionario= Funcionario::select('funcionario.id as funcionario_id','funcionario.*') 
-        ->join ('persona', 'persona.id','=','funcionario.persona_id')        
+        $funcionario= Funcionario::select('rrhh.funcionario.id as funcionario_id','rrhh.funcionario.*') 
+        ->join ('persona', 'persona.id','=','rrhh.funcionario.persona_id')        
         ->where('persona.numero_identificacion','=',$cedula_usuario)->get();
         $funcionario_id=null;
         $cursos=null;
