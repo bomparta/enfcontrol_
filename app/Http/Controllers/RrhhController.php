@@ -331,7 +331,10 @@ public function subirArchivo_rrhh(Request $request)
         ->join ('genero', 'persona.id_genero','=','genero.id')
         ->where('rrhh.familiares.funcionario_id','=',$funcionario_id)->paginate(5);
         $idiomas=Idiomas::select('*')->where('rrhh.idiomas.funcionario_id','=',$funcionario_id)->paginate(5);
-        $cuentas=Cuentas_bancarias::select('*')->where('rrhh.cuentas_bancarias.funcionario_id','=',$funcionario_id)->paginate(5);
+
+        $cuentas=Cuentas_bancarias::select('banco.*','rrhh.cuentas_bancarias.*')
+        ->join ('banco', 'banco.id','=','rrhh.cuentas_bancarias.nombre_banco')
+        ->where('rrhh.cuentas_bancarias.funcionario_id','=',$funcionario_id)->paginate(5);
         $id= Auth::user()->id;
         $foto = ImagenUpload::select('*')
        ->where('usuario', '=',$id)
@@ -514,12 +517,12 @@ public function subirArchivo_rrhh(Request $request)
         ->join('parroquia','parroquia.id','=','rrhh.funcionario.parroquia_domicilio')             
         ->where('persona.numero_identificacion','=',$cedula_usuario)->get();      
        $nacionalidades= Nacionalidad::All();
-       $movimiento=RrhhMovimientos::Select('*','rrhh_movimientos.id as id_rrhh_mov','tipo_trabajador.descripcion as tipo_trabajador','ubic_administrativa.descripcion as ubic_administrativa','tipo_movimientos.descripcion as tipo_mov') 
-       ->JOIN('tipo_trabajador','tipo_trabajador.id','rrhh_movimientos.id_tipo_funcionario')      
-       ->JOIN('ubic_administrativa','ubic_administrativa.id','rrhh_movimientos.id_oficina_administrativa') 
-       ->JOIN('tipo_movimientos','tipo_movimientos.id','rrhh_movimientos.id_tipo_mov') 
-       ->where('rrhh_movimientos.cedula','=',$cedula_usuario)
-       ->orderBy('rrhh_movimientos.created_at','desc')->get();      
+       $movimiento=RrhhMovimientos::Select('*','rrhh.rrhh_movimientos.id as id_rrhh_mov','tipo_trabajador.descripcion as tipo_trabajador','ubic_administrativa.descripcion as ubic_administrativa','rrhh.tipo_movimientos.descripcion as tipo_mov') 
+       ->JOIN('tipo_trabajador','tipo_trabajador.id','rrhh.rrhh_movimientos.id_tipo_funcionario')      
+       ->JOIN('ubic_administrativa','ubic_administrativa.id','rrhh.rrhh_movimientos.id_oficina_administrativa') 
+       ->JOIN('rrhh.tipo_movimientos','rrhh.tipo_movimientos.id','rrhh.rrhh_movimientos.id_tipo_mov') 
+       ->where('rrhh.rrhh_movimientos.cedula','=',$cedula_usuario)
+       ->orderBy('rrhh.rrhh_movimientos.created_at','desc')->get();      
        if($datos_funcionario->count()>0){      
            return view('rrhh/movimientos', compact('datos_funcionario','nacionalidades','edad', 'movimiento','cedula_usuario'));
         }else {
@@ -557,7 +560,7 @@ public function subirArchivo_rrhh(Request $request)
         ->join('parroquia','parroquia.id','=','rrhh.funcionario.parroquia_domicilio')             
         ->where('persona.numero_identificacion','=',$cedula_usuario)->get();      
        $nacionalidades= Nacionalidad::All();
-       $adm_pub=Administracion_publica::Select('*','rrhh.administracion_publica.id as adm_id','tipo_trabajador.descripcion as tipo_trabajador') 
+       $adm_pub=Administracion_publica::Select('rrhh.administracion_publica.*','rrhh.administracion_publica.id as adm_id','tipo_trabajador.descripcion as tipo_trabajador') 
        ->JOIN('tipo_trabajador','tipo_trabajador.id','rrhh.administracion_publica.id_tipo_funcionario')             
        ->where('rrhh.administracion_publica.funcionario_id','=',$funcionario_id)
        ->orderBy('rrhh.administracion_publica.fecha_ingreso','asc')->get();    
@@ -652,7 +655,7 @@ public function subirArchivo_rrhh(Request $request)
      
     public function update_fecha_ingreso(Request $request)
     {
-       // dd($request);
+      // dd($request);
         $request->validate([
             
           

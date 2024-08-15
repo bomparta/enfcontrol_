@@ -234,8 +234,8 @@ body { margin-left: 0.1in; margin-right: 0.1in; margin-top: 0.1in; margin-bottom
 	@foreach($cuentas as $cuentas)
 	<tr>
 		<td  colspan=5  align="center"   >  {{$cuentas->cuenta}}   </td>
-		<td  colspan=3 align="center"   >    {{$cuentas->tipo_cuenta}}      </td>
-		<td  colspan=5 align="center"  >  {{$cuentas->nombre_banco}}   </td>
+		<td  colspan=3 align="center"   >    @if ($cuentas->tipo_cuenta==1)  CORRIENTE @endif   @if ($cuentas->tipo_cuenta==2)  AHORRO @endif     </td>
+		<td  colspan=5 align="center"  >  {{$cuentas->nombre}}   </td>
 	</tr>
 	@endforeach
 	<tr>

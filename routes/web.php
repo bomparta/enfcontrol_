@@ -68,7 +68,7 @@ Route::get("/rrhh/registrar_adm_publica/{cedula}", "RrhhController@antecedentes"
 Route::post("/rrhh/registrar_adm_publica", "RrhhController@store_antecedentes")->name('store_antecedentes');
 Route::post("/rrhh/registrar_adm_publica_edit", "RrhhController@update_antecedentes")->name('update_antecedentes');
 Route::delete('registrar_adm_publica/{id}', 'RrhhController@destroy')->name('borrar_adm_pub');
-Route::post("/rrhh/registrar_adm_publica_edit/{id}/{cedula}", "RrhhController@update_fecha_ingreso")->name('update_fecha_ingreso');
+Route::post("/rrhh/registrar_adm_publica_edit", "RrhhController@update_fecha_ingreso")->name('update_fecha_ingreso');
 
 Route::get("/rrhh/registrar_vac_pendientes/{cedula}", "RrhhController@vac_pendientes_rrhh")->name('vac_pendientes_rrhh');
 Route::get("/rrhh/registrar_vac_pendientesedit/{id}/{cedula}", "RrhhController@vac_pendientes_rrhh_edit")->name('vac_pendientes_rrhh_edit');

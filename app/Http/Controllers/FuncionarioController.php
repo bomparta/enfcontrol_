@@ -186,7 +186,7 @@ class FuncionarioController extends Controller
        }
       // dd($correo_titular);
       
-        $familiar  =   Familiares::select ('*','rrhh.familiares.id as id_familiar','rrhhfamiliares.persona_id as id_persona', 'nacionalidad.cod as nacionalidad',
+        $familiar  =   Familiares::select ('*','rrhh.familiares.id as id_familiar','rrhh.familiares.persona_id as id_persona', 'nacionalidad.cod as nacionalidad',
         'parentezco.descripcion as parentezco')
         ->join ('rrhh.funcionario', 'rrhh.familiares.funcionario_id','=','rrhh.funcionario.id')
         ->join ('persona', 'persona.id','=','rrhh.familiares.persona_id')
@@ -213,11 +213,11 @@ class FuncionarioController extends Controller
        
       
     
-         $familiar  =   Familiares::select ('*','familiares.id as id_familiar','familiares.persona_id as id_persona','familiares.ocupacion')
-        ->join ('rrhh.funcionario', 'familiares.funcionario_id','=','rrhh.funcionario.id')
-        ->join ('persona', 'persona.id','=','familiares.persona_id')
+         $familiar  =   Familiares::select ('*','rrhh.familiares.id as id_familiar','rrhh.familiares.persona_id as id_persona','rrhh.familiares.ocupacion')
+        ->join ('rrhh.funcionario', 'rrhh.familiares.funcionario_id','=','rrhh.funcionario.id')
+        ->join ('persona', 'persona.id','=','rrhh.familiares.persona_id')
         ->join ('genero', 'persona.id_genero','=','genero.id')     
-        ->where('familiares.id','=',$familiar_id)->get();   
+        ->where('rrhh.familiares.id','=',$familiar_id)->get();   
       //dd($familiar);
         return view('rrhh.funcionario.familiar_edit',compact('familiar','generos','parentezco','nacionalidades','estado_civils','cod_habs','cod_cels'));         
      
